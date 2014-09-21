@@ -8,7 +8,8 @@ image_dir = sys.argv[1]
 
 # warsh: 1, 560 (last page: 559)
 # shamerly: 2, 523 (last page: 522)
-for i in range(1, 560):
+# qaloon: 1, 605 (last page: 604)
+for i in range(1, 605):
    filename = str(i).zfill(3) + '.png'
    img_rgb = cv2.imread(image_dir + '/' + filename)
    img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)

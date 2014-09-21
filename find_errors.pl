@@ -19,7 +19,7 @@
            10, 8, 3, 9, 5, 5, 6, 3, 6, 3, 5, 4, 5, 6);
 
 # important!
-@counts = @warsh_counts;
+@counts = @hafs_counts;
 
 $ayat = 0;
 $sura = 1;

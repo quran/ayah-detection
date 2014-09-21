@@ -3,6 +3,11 @@ import numpy as np
 import sys
 
 # this script is from http://stackoverflow.com/questions/5365589
+# it converts a white background to be transparent
+if len(sys.argv) != 3:
+   print "usage: " + sys.argv[0] + " [image] [output]"
+   sys.exit(1)
+
 threshold = 100
 dist = 5
 img = Image.open(sys.argv[1]).convert('RGBA')
@@ -17,4 +22,4 @@ mask = ((r>threshold)
         & (np.abs(g-b)<dist))
 arr[mask, 3] = 0
 img = Image.fromarray(arr,mode='RGBA')
-img.save('out.png')
+img.save(sys.argv[2])
