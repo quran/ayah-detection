@@ -112,9 +112,9 @@ if __name__ == "__main__":
    image = Image.open(sys.argv[1]).convert('RGBA')
 
    # 100/35/False for warsh
-   # 110/50/False for shamerly
+   # 110/87/False for shamerly
    # 175/75/True for qaloon
-   lines = find_lines(image, 100, 35, False)
+   lines = find_lines(image, 110, 87, False)
    for line in lines:
       print line
    draw(image, lines, 'test.png')

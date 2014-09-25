@@ -14,7 +14,7 @@ for i in range(2, 523):
    image = Image.open(sys.argv[1] + '/' + filename).convert('RGBA')
 
    # note: these values will change depending on image type and size
-   # warsh: 100/35/False, shamerly: 110/50/False, 175/75/True for qaloon
-   lines = find_lines(image, 110, 50, False)
+   # warsh: 100/35/False, shamerly: 110/87/False, 175/75/True for qaloon
+   lines = find_lines(image, 110, 87, False)
    print 'found: %d lines on page %d' % (len(lines), i)
    draw(image, lines, 'out/' + filename)
