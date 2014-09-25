@@ -1,22 +1,20 @@
 import sys
 import cv2
 from PIL import Image
-from lines import find_lines
+from lines import find_lines, draw
 from ayat import find_ayat
 
-if False:
-# find lines
-   image = Image.open(sys.argv[1]).convert('RGBA')
+# warsh: 1, 560 (last page: 559)
+# shamerly: 2, 523 (last page: 522)
+# qaloon: 1, 605 (last page: 604)
+for i in range(2, 523):
+   filename = str(i).zfill(3) + '.png'
 
-# note: these values will change depending on image type and size
-# warsh: 100/20/False, shamerly: 110/50/False, 175/75/True for qaloon
-   lines = find_lines(image, 100, 20, False)
-   for line in lines:
-         print line
+   # find lines
+   image = Image.open(sys.argv[1] + '/' + filename).convert('RGBA')
 
-# find ayat
-img_rgb = cv2.imread(sys.argv[1])
-img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
-template = cv2.imread(sys.argv[2], 0)
-ayat = find_ayat(img_gray, template)
-print 'found: %d' % len(ayat)
+   # note: these values will change depending on image type and size
+   # warsh: 100/35/False, shamerly: 110/50/False, 175/75/True for qaloon
+   lines = find_lines(image, 110, 50, False)
+   print 'found: %d lines on page %d' % (len(lines), i)
+   draw(image, lines, 'out/' + filename)

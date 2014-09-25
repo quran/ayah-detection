@@ -1,0 +1,24 @@
+# TODO: sometimes, midpoint is not the best algorithm. can we do better?
+
+shamerly
+========
+settings: (110 line height, 50 max pixels, false for use transparency)
+- pages with more than one sura detect less lines.
+- the header for the next sura takes up one line (really 2, but only one is
+  detected with the current settings)
+- the basmalla takes up one line
+- so for each sura split, skip 2 lines, except for sura tawba, skip 1.
+- care must be taken for pages like 519 and 520, which end in a header (and
+  the actual basmala is on the next page, so it needs to be skipped there).
+# TODO: need to shift all the files down by 1 (sura fatiha is currently page 2)
+# figure out why pages are wrong - 13 lines for page 318, for example
+
+warsh
+=====
+settings: (100 line height, 35 max pixels, false for use transparency)
+- each sura split header is one line, and each basmala is one line
+- skip 2 lines per sura split (except sura tawba, skip 1)
+
+previously problematic pages
+- pages 27, 304, 320 and 538 are detecting 16 lines 
+- page 294, 385 don't work (crashes) -- done
