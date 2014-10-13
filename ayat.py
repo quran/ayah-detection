@@ -23,6 +23,26 @@ def is_y_in_range(y_range, pt):
     return (True, True)
   return (False, False)
 
+def process(ayat):
+   result = []
+   cur_y = ayat[0][1]
+   same_line = []
+   for ayah in ayat:
+      if abs(ayah[1] - cur_y) < 20:
+         same_line.append(ayah)
+      else:
+         same_line.sort(key=lambda tup: tup[0])
+         for s in same_line[::-1]:
+            result.append(s)
+         cur_y = ayah[1]
+         same_line = []
+         same_line.append(ayah)
+
+   same_line.sort(key=lambda tup: tup[0])
+   for s in same_line[::-1]:
+      result.append(s)
+   return result
+
 def find_ayat(img_gray, template):
    w, h = template.shape[::-1]
 
@@ -93,7 +113,7 @@ def find_ayat(img_gray, template):
      e_x_avg = (e[0] + e[1]) / 2
      e_y_avg = (e[2] + e[3]) / 2
      ayat.append((e_x_avg, e_y_avg))
-   return ayat
+   return process(ayat)
 
 def draw(img_rgb, template, ayat, output):
    w, h = template.shape[::-1]

@@ -2,21 +2,34 @@
 
 shamerly
 ========
-settings: (110 line height, 87 max pixels, false for use transparency)
+settings: (110 line height, 87 max pixels, 0 for mode)
 - the header for the next sura takes up two lines
 - the basmalla takes up one line
 - so for each sura split, skip 3 lines, except for sura tawba, skip 2.
 - care must be taken for pages like 519 and 520, which end in a header (and
   the actual basmala is on the next page, so it needs to be skipped there).
-# TODO: need to shift all the files down by 1 (sura fatiha is currently page 2)
+# TODO: need to shift all the files down by 1 (sura fatiha is currently pg 2)
 # TODO: the last line of page 467 needs to be manually added
 
 warsh
 =====
-settings: (100 line height, 35 max pixels, false for use transparency)
+settings: (100 line height, 35 max pixels, 0 for mode)
 - each sura split header is one line, and each basmala is one line
 - skip 2 lines per sura split (except sura tawba, skip 1)
 
 previously problematic pages
 - pages 27, 304, 320 and 538 are detecting 16 lines 
 - page 294, 385 don't work (crashes) -- done
+
+qaloon
+======
+settings: (175 line height, 75 max pixels, 1 for mode 
+   (false for transparency, can start lines at the top of the page))
+- each sura split header is 2 lines
+
+note: removing restrict_lines flag results in any page where a sura starts
+at the top of the page to only detect 14 lines. it may, in the future, be
+an option to remove the restrict lines option and just handle the 14 lines
+case as having already skipped one of the required lines to skip.
+
+* important - use the white background pages, otherwise, results aren't good

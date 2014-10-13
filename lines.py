@@ -14,15 +14,16 @@ then, for each line's ys, find the min x and max across them.
 we then have the bounding box for each line
 """
 
-def is_not_blank(pt, use_transparency):
-   if use_transparency:
-      return pt[3] > 10
+def is_not_blank(pt):
    return sum(pt) < 200 * len(pt)
 
-def find_lines(image, line_height, max_pixels, use_transparency):
+def find_lines(image, line_height, max_pixels, mode):
    ranges = []
    range_end = -1
    range_start = -1
+   restrict_lines = True
+   if mode == 1:
+      restrict_lines = False
 
    data = image.getdata()
    width, height = image.size
@@ -30,12 +31,12 @@ def find_lines(image, line_height, max_pixels, use_transparency):
       filled_pixels = 0
       for x in range(0, width):
          pt = data[y * width + x]
-         if is_not_blank(pt, use_transparency):
+         if is_not_blank(pt):
             filled_pixels = filled_pixels + 1
       # print "line " + str(y) + " has " + str(filled_pixels)
       if filled_pixels < max_pixels:
          if range_start == -1:
-            if filled_pixels == 0 and len(ranges) == 0:
+            if restrict_lines and filled_pixels == 0 and len(ranges) == 0:
                continue
             range_start = y
             range_end = y
@@ -84,13 +85,13 @@ def find_lines(image, line_height, max_pixels, use_transparency):
       for y in range(yrange[0], yrange[1]):
          for x in range(0, width):
             pt = data[y * width + x]
-            if is_not_blank(pt, use_transparency):
+            if is_not_blank(pt):
                if first_x > x:
                   first_x = x - 1
                break
          for x in reversed(range(0, width)):
             pt = data[y * width + x]
-            if is_not_blank(pt, use_transparency):
+            if is_not_blank(pt):
                if x > last_x:
                   last_x = x
                break
@@ -111,10 +112,10 @@ if __name__ == "__main__":
       sys.exit(1)
    image = Image.open(sys.argv[1]).convert('RGBA')
 
-   # 100/35/False for warsh
-   # 110/87/False for shamerly
-   # 175/75/True for qaloon
-   lines = find_lines(image, 110, 87, False)
+   # 100/35/0 for warsh
+   # 110/87/0 for shamerly
+   # 175/75/1 for qaloon
+   lines = find_lines(image, 175, 75, 1)
    for line in lines:
       print line
    draw(image, lines, 'test.png')
