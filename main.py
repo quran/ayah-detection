@@ -14,8 +14,8 @@ hafs_ayat = [7, 286, 200, 176, 120, 165, 206, 75, 129, 109, 123, 111,
              11, 8, 3, 9, 5, 4, 7, 3, 6, 3, 5, 4, 5, 6]
 
 sura = 2
-ayah = 1
-lines_to_skip = 2
+ayah = 6
+lines_to_skip = 0
 default_lines_to_skip = 2
 
 # by default, we don't increase the ayah on the top of this loop
@@ -26,7 +26,7 @@ end_of_ayah = False
 # warsh: 1, 560 (last page: 559)
 # shamerly: 2, 523 (last page: 522) - lines to skip: 3 (2 + 1 basmala)
 # qaloon: 1, 605 (last page: 604) - lines to skip: 2 (1 + 1 basmala)
-for i in range(2, 605):
+for i in range(3, 605):
    image_dir = sys.argv[1] + '/'
    filename = str(i).zfill(3) + '.png'
    print filename
@@ -76,7 +76,7 @@ for i in range(2, 605):
          cur_line = lines[line]
          miny = cur_line[0][1]
          maxy = cur_line[1][1]
-         if y_pos >= miny and y_pos <= maxy:
+         if y_pos <= maxy:
             # we found the line with the ayah
             maxx = cur_line[1][0]
             if x_pos_in_line > 0:
@@ -85,7 +85,12 @@ for i in range(2, 605):
             vals = (i, line + 1, sura, ayah, pos, minx, maxx, miny, maxy)
             s = 'insert into glyphs values(NULL, '
             print s + '%d, %d, %d, %d, %d, %d, %d, %d, %d);' % vals
-            if abs(minx - cur_line[0][0]) < tpl_width:
+
+            end_of_sura = False
+            if hafs_ayat[sura - 1] == ayah:
+               end_of_sura = True
+
+            if end_of_sura or abs(minx - cur_line[0][0]) < tpl_width:
                x_pos_in_line = -1
                current_line = current_line + 1
                if current_line == num_lines:
