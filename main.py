@@ -14,9 +14,9 @@ hafs_ayat = [7, 286, 200, 176, 120, 165, 206, 75, 129, 109, 123, 111,
              11, 8, 3, 9, 5, 4, 7, 3, 6, 3, 5, 4, 5, 6]
 
 sura = 2
-ayah = 6
+ayah = 5
 lines_to_skip = 0
-default_lines_to_skip = 2
+default_lines_to_skip = 3
 
 # by default, we don't increase the ayah on the top of this loop
 # to handle ayat that span multiple pages - this flag allows us to
@@ -26,7 +26,7 @@ end_of_ayah = False
 # warsh: 1, 560 (last page: 559)
 # shamerly: 2, 523 (last page: 522) - lines to skip: 3 (2 + 1 basmala)
 # qaloon: 1, 605 (last page: 604) - lines to skip: 2 (1 + 1 basmala)
-for i in range(3, 605):
+for i in range(4, 523):
    image_dir = sys.argv[1] + '/'
    filename = str(i).zfill(3) + '.png'
    print filename
@@ -36,7 +36,10 @@ for i in range(3, 605):
 
    # note: these values will change depending on image type and size
    # warsh: 100/35/0, shamerly: 110/87/0, 175/75/1 for qaloon
-   lines = find_lines(image, 175, 75, 1)
+   value = 87
+   if i == 467:
+      value = 50
+   lines = find_lines(image, 110, value, 0)
    print 'found: %d lines on page %d' % (len(lines), i)
 
    img_rgb = cv2.imread(image_dir + filename)
@@ -111,10 +114,32 @@ for i in range(3, 605):
             s = 'insert into glyphs values(NULL, '
             print s + '%d, %d, %d, %d, %d, %d, %d, %d, %d);' % vals
 
-   if x_pos_in_line != -1:
-      # still space for more ayahs, but we're done
+   # handle cases when the sura ends on a page, and there are no more
+   # ayat. this could mean that we need to adjust lines_to_skip (as is
+   # the case when the next sura header is at the bottom) or also add
+   # some ayat that aren't being displayed at the moment.
+   if end_of_sura:
+      # end of sura always means x_pos_in_line is -1
+      sura = sura + 1
+      ayah = 1
+      lines_to_skip = default_lines_to_skip
+      if sura == 9:
+         lines_to_skip = lines_to_skip - 1
+      end_of_ayah = False
+      while line + 1 < num_lines and lines_to_skip > 0:
+         line = line + 1
+         lines_to_skip = lines_to_skip - 1
+      if lines_to_skip == 0 and line + 1 != num_lines:
+         ayah = 0
+
+   # we have some lines unaccounted for or stopped mid-line
+   if x_pos_in_line != -1 or line + 1 != num_lines:
+      if x_pos_in_line == -1:
+         line = line + 1
+      pos = 0
       ayah = ayah + 1
       for l in range(line, num_lines):
+         pos = pos + 1
          maxx = cur_line[1][0]
          if x_pos_in_line > 0:
             maxx = x_pos_in_line

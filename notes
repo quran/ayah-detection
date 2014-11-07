@@ -9,7 +9,9 @@ settings: (110 line height, 87 max pixels, 0 for mode)
 - care must be taken for pages like 519 and 520, which end in a header (and
   the actual basmala is on the next page, so it needs to be skipped there).
 # TODO: need to shift all the files down by 1 (sura fatiha is currently pg 2)
-# TODO: the last line of page 467 needs to be manually added
+
+known issue - for the last line of page 467, change the pixels value from
+87 to 50 in order to detect it properly.
 
 warsh
 =====

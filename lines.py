@@ -115,7 +115,7 @@ if __name__ == "__main__":
    # 100/35/0 for warsh
    # 110/87/0 for shamerly
    # 175/75/1 for qaloon
-   lines = find_lines(image, 175, 75, 1)
+   lines = find_lines(image, 110, 87, 0)
    for line in lines:
       print line
    draw(image, lines, 'test.png')
