@@ -46,3 +46,24 @@ loop.py
 `loop.py` is used in conjunction with things like `find_errors.pl` to do some basic validation. i was using it to figure out where each sura starts/ends, so i could then
 check that particular page and verify.
 
+Quran Android
+-------------
+in order to be compatible with Quran Android, just generate a database file with similar structure to the existing ayahinfo database files.
+
+    CREATE TABLE glyphs(
+      glyph_id int not null,
+      page_number int not null,
+      line_number int not null,
+      sura_number int not null,
+      ayah_number int not null,
+      position int not null,
+      min_x int not null,
+      max_x int not null,
+      min_y int not null,
+      max_y int not null,
+      primary key(glyph_id)
+    );
+    CREATE INDEX sura_ayah_idx on glyphs(sura_number, ayah_number);
+    CREATE INDEX page_idx on glyphs(page_number);
+
+note: currently, `glyph_id` is set to `NULL` in the script, which is problematic. we can just put a number and increase it as need be, since using `AUTOINCREMENT` in sqlite has performance implications.

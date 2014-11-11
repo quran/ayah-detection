@@ -13,6 +13,16 @@ settings: (110 line height, 87 max pixels, 0 for mode)
 known issue - for the last line of page 467, change the pixels value from
 87 to 50 in order to detect it properly.
 
+to fix up the page numbering:
+
+#! /usr/bin/perl
+for ($i=2; $i<=522; $i++) {
+   $target = $i-1;
+   $cmd = "mv page" . sprintf("%03d", $i) . ".png page" .
+      sprintf("%03d", $target) . ".png";
+   `$cmd`;
+}
+
 warsh
 =====
 settings: (100 line height, 35 max pixels, 0 for mode)
