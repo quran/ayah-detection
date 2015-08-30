@@ -139,6 +139,7 @@ for i in range(4, 523):
       pos = 0
       ayah = ayah + 1
       for l in range(line, num_lines):
+         cur_line =  lines[l]
          pos = pos + 1
          maxx = cur_line[1][0]
          if x_pos_in_line > 0:
