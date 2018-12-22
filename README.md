@@ -23,6 +23,14 @@ requirements:
 * matplotlib (`pip install matplotlib`)
 * numpy (`pip install numpy`)
 
+ideally, run something like this:
+
+```
+python -m virtualenv virtualenv
+pip install -r requirements.txt
+source virtualenv/bin/activate
+```
+
 you also need a template image. you make one by cutting out an ayah marker image from one of your pages. the threshold is set low enough such that it will match all of the marker images despite the different numbers. some examples exist under `images/templates`.
 
 lines.py

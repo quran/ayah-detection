@@ -1,7 +1,6 @@
 import cv2
 import sys
 import numpy as np
-from matplotlib import pyplot as plt
 
 # heavily based on the "template matching" tutorial for opencv python
 
