@@ -49,7 +49,7 @@ def find_ayat(img_gray, template):
    threshold = 0.5
    loc = np.where( res >= threshold)
 
-   points = zip(*loc[::-1])
+   points = list(zip(*loc[::-1]))
    ayat = []
    if len(points) == 0:
       return ayat
@@ -60,12 +60,6 @@ def find_ayat(img_gray, template):
    actual_y_range = y_range
 
    for pt in points:
-      old_x_range = x_range
-      x_in_range = False
-      y_in_range = False
-      should_expand_x = False
-      should_expand_y = False
-
       x_in_range, should_expand_x = is_x_in_range(x_range, pt)
       y_in_range, should_expand_y = is_y_in_range(y_range, pt)
 
@@ -116,13 +110,14 @@ def find_ayat(img_gray, template):
 
 def draw(img_rgb, template, ayat, output):
    w, h = template.shape[::-1]
-   for pt in ayat:
-      cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0,0,255), 2)
+   for point in ayat:
+      pt = (int(point[0]), int(point[1]))
+      cv2.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0,0,255), thickness=2)
    cv2.imwrite(output, img_rgb)
 
 if __name__ == "__main__":
    if len(sys.argv) < 3:
-      print "usage: " + sys.argv[0] + " image template"
+      print("usage: " + sys.argv[0] + " image template")
       sys.exit(1)
 
    img_rgb = cv2.imread(sys.argv[1])
@@ -130,5 +125,5 @@ if __name__ == "__main__":
    template = cv2.imread(sys.argv[2], 0)
    ayat = find_ayat(img_gray, template)
    for ayah in ayat:
-      print ayah
+      print(ayah)
    draw(img_rgb, template, ayat, 'res.png')

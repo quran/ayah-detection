@@ -1,5 +1,5 @@
 *.pyc
-images/warsh
-images/shamerly
-images/qaloon
+images
 output
+virtualenv
+.idea
