@@ -33,6 +33,12 @@ previously problematic pages
 - pages 27, 304, 320 and 538 are detecting 16 lines 
 - page 294, 385 don't work (crashes) -- done
 
+for year 1440 updated pages
+settings: (125 line height, 35 max pixels, 0 for mode)
+
+problematic pages
+- 377, 446, 552, 556, and 576
+
 qaloon
 ======
 settings: (175 line height, 75 max pixels, 1 for mode 
