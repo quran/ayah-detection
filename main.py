@@ -12,23 +12,35 @@ hafs_ayat = [7, 286, 200, 176, 120, 165, 206, 75, 129, 109, 123, 111,
              44, 28, 28, 20, 56, 40, 31, 50, 40, 46, 42, 29, 19, 36, 25,
              22, 17, 19, 26, 30, 20, 15, 21, 11, 8, 8, 19, 5, 8, 8, 11,
              11, 8, 3, 9, 5, 4, 7, 3, 6, 3, 5, 4, 5, 6]
+warsh_ayat = [7, 285, 200, 175, 122, 167, 206, 76, 130, 109, 121, 111,
+              44, 54, 99, 128, 110, 105, 99, 134, 111, 76, 119, 62, 77,
+              226, 95, 88, 69, 59, 33, 30, 73, 54, 46, 82, 182, 86, 72,
+              84, 53, 50, 89, 56, 36, 34, 39, 29, 18, 45, 60, 47, 61, 55,
+              77, 99, 28, 21, 24, 13, 14, 11, 11, 18, 12, 12, 31, 52, 52,
+              44, 30, 28, 18, 55, 39, 31, 50, 40, 45, 42, 29, 19, 36, 25,
+              22, 17, 19, 26, 32, 20, 15, 21, 11, 8, 8, 20, 5, 8, 9, 11,
+              10, 8, 3, 9, 5, 5, 6, 3, 6, 3, 5, 4, 5, 6]
 
-sura = 2
-ayah = 5
-lines_to_skip = 0
-default_lines_to_skip = 3
+sura = 1
+ayah = 1
+# number of lines to skip when the end of the sura is reached
+# for example, one for the basmallah and one for the header.
+# 1 is automatically deducted from this number for sura Tawbah.
+default_lines_to_skip = 2
+sura_ayat = hafs_ayat
 
 # by default, we don't increase the ayah on the top of this loop
 # to handle ayat that span multiple pages - this flag allows us to
 # override this.
 end_of_ayah = False
 
+lines_to_skip = 0
 # warsh: 1, 560 (last page: 559)
 # shamerly: 2, 523 (last page: 522) - lines to skip: 3 (2 + 1 basmala)
 # qaloon: 1, 605 (last page: 604) - lines to skip: 2 (1 + 1 basmala)
-for i in range(4, 523):
+for i in range(1, 605):
     image_dir = sys.argv[1] + '/'
-    filename = str(i).zfill(3) + '.png'
+    filename = 'page' + str(i).zfill(3) + '.jpg'
     print(filename)
 
     # find lines
@@ -58,7 +70,7 @@ for i in range(4, 523):
     first = True
     end_of_sura = False
     for ayah_item in ayat:
-        if (end_of_ayah or not first) and hafs_ayat[sura - 1] == ayah:
+        if (end_of_ayah or not first) and sura_ayat[sura - 1] == ayah:
             sura = sura + 1
             ayah = 1
             lines_to_skip = default_lines_to_skip
@@ -92,7 +104,7 @@ for i in range(4, 523):
                 print(s + '%d, %d, %d, %d, %d, %d, %d, %d, %d);' % vals)
 
                 end_of_sura = False
-                if hafs_ayat[sura - 1] == ayah:
+                if sura_ayat[sura - 1] == ayah:
                     end_of_sura = True
 
                 if end_of_sura or abs(minx - cur_line[0][0]) < tpl_width:

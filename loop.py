@@ -24,20 +24,21 @@ def count_ayat(image_dir, filename, template_file):
 
 
 def main():
-    # total = 0
+    total = 0
     image_dir = sys.argv[1] + '/'
+    prefix = 'page'
 
     # warsh: 1, 560 (last page: 559)
     # shamerly: 2, 523 (last page: 522)
     # qaloon: 1, 605 (last page: 604)
     for i in range(1, 605):
-        filename = str(i).zfill(3) + '.png'
-        # print 'processing %s' % filename
+        filename = prefix + str(i).zfill(3) + '.jpg'
+        print('processing %s' % filename)
         verify_lines(image_dir, filename)
 
-        # ayat = count_ayat(image_dir, filename, sys.argv[2])
-        # total = total + len(ayat)
-    # print 'found a total of %d ayat.' % total
+        ayat = count_ayat(image_dir, filename, sys.argv[2])
+        total = total + len(ayat)
+    print('found a total of %d ayat.' % total)
 
 
 if __name__ == "__main__":

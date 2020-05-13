@@ -26,7 +26,7 @@ $sura = 1;
 $current_target = $counts[0];
 
 while (<>) {
-   $_ =~ /found: (\d+) in page (\d+)/;
+   $_ =~ /found: (\d+) ayat on page (\d+)/;
    if ($ayat + int($1) >= $current_target) {
       $ayat = $ayat + int($1);
       while ($ayat > $current_target && $sura < 115) {

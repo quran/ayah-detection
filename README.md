@@ -45,6 +45,15 @@ python -u loop.py /path/ template.png | tee output.txt
   ayahs parsed on a page, etc).
 - when everything looks fine, run main.py after tweaking values.
 - revalidate the output using the error checking script.
+- note: if main.py breaks due to index out of bounds, etc, double check the
+  values. chances are something is off (check to ensure that the correct start
+  sura, end sura, and number of ayahs per sura are set).
+- in some cases, having multiple ayah templates helps (or otherwise reducing
+  the accuracy, but this could lead to false positives).
+- note: reading the sql output can also help pinpoint issues - ex if you
+  expect page 50 to be the start of sura Al-i-'Imran and it's actually writing
+  sql that indicates its for an ayah in sura Baqarah, then you know that an
+  ayah might not have been detected in sura Baqarah for example.
 
 
 ## Scripts
