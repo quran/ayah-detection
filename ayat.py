@@ -45,11 +45,10 @@ def process(ayat):
     return result
 
 
-def find_ayat(img_gray, template):
+def find_ayat(img_gray, template, threshold=0.5):
     w, h = template.shape[::-1]
 
     res = cv2.matchTemplate(img_gray, template, cv2.TM_CCOEFF_NORMED)
-    threshold = 0.5
     loc = np.where(res >= threshold)
 
     points = list(zip(*loc[::-1]))

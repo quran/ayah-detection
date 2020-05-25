@@ -37,7 +37,7 @@ for year 1440 updated pages
 settings: (125 line height, 35 max pixels, 0 for mode)
 
 problematic pages
-- 377, 446, 552, 556, and 576
+- (require template 2) 377, 446, 552, 556, and 576 (requires both templates)
 
 qaloon
 ======
