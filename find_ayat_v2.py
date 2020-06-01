@@ -4,14 +4,8 @@ import sys
 # new madani
 WIDTH_MIN = 60
 WIDTH_MAX = 75
-HEIGHT_MIN = 90
-HEIGHT_MAX = 100
-
-# warsh 1440
-# WIDTH_MIN = 51
-# WIDTH_MAX = 65
-# HEIGHT_MIN = 79
-# HEIGHT_MAX = 95
+HEIGHT_MIN = 88
+HEIGHT_MAX = 96
 
 
 def find_ayat(img_rgb):
@@ -20,17 +14,28 @@ def find_ayat(img_rgb):
     contours = cv2.findContours(binarized.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)[0]
 
     results = []
+    selected_contours = []
     for contour in contours:
         (x, y, w, h) = cv2.boundingRect(contour)
         if WIDTH_MIN < w < WIDTH_MAX and HEIGHT_MIN < h < HEIGHT_MAX:
-            results.append((x, y, w, h))
-    return results
+            is_marker = False
+            for row in range(y, y + h):
+                for col in range(x, x + h):
+                    (b, g, r) = img_rgb[row, col]
+                    if b > 200 and g > 150 and g < 200 and r < 50:
+                        is_marker = True
+                        break
+            if is_marker:
+                results.append((x, y, w, h))
+                selected_contours.append(contour)
+    # cv2.imshow("image", img_rgb)
+    # cv2.waitKey(0)
+    return [results, selected_contours]
 
 
-def draw(img_rgb, ayat, output):
-    for point in ayat:
-        (x, y, w, h) = point
-        cv2.rectangle(img_rgb, (x, y), (x + w, y + h), (0, 0, 255), thickness=2)
+def draw(img_rgb, contours, output):
+    for contour in contours:
+        cv2.drawContours(img_rgb, [contour], -1, (240, 0, 159), 3)
     cv2.imwrite(output, img_rgb)
 
 
@@ -42,8 +47,11 @@ def main():
     filename = sys.argv[1]
     # filename = "new_madani/page003.png"
     img_rgb = cv2.imread(filename)
-    ayat = find_ayat(img_rgb)
-    draw(img_rgb, ayat, 'res.png')
+    (ayat, contours) = find_ayat(img_rgb)
+    draw(img_rgb, contours, 'res.png')
+    for ayah in ayat:
+        (x, y, w, h) = ayah
+        print("marker found at: (%d, %d) - %dx%d" % (x, y, w, h))
 
 
 if __name__ == "__main__":
