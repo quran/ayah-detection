@@ -147,3 +147,11 @@ note: currently, `glyph_id` is set to `NULL` in the script, which is problematic
 #### find_ayat_v2.py
 
 `find_ayat_v2.py` is a simpler version of `ayat.py` that uses OpenCV to find contours instead. consequently, this script doesn't need a template image. the downside of this approach, however, is that it can have many false positives since certain letters can still be detected as contours. this can greatly be reduced if the ayah markers have colors, which most do - simply checking for colors in a certain range greatly reduces (if not completely eliminates) these false positives. this will become the recommended approach moving forward in sha' Allah.
+
+
+#### marker_remover_v2.py.py
+
+`marker_remover_v2.py` is an updated version of `marker_remover.py` that uses
+`find_ayat_v2.py` to find and remove markers from pages. initial tests are
+very promising al7amdulillah, and this will likely become the recommended
+approach moving forward in sha' Allah.
