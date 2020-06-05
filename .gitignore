@@ -1,5 +1,6 @@
 *.pyc
-images
+wip
 output
 virtualenv
 .idea
+.envrc

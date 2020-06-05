@@ -116,10 +116,8 @@ def main():
         sys.exit(1)
     image = Image.open(sys.argv[1]).convert('RGBA')
 
-    # 100/35/0 for warsh
-    # 110/87/0 for shamerly
-    # 175/75/1 for qaloon
-    lines = find_lines(image, 110, 87, 0)
+    # tweak this for the pages
+    lines = find_lines(image, 110, 35, 0)
     for line in lines:
         print(line)
     draw(image, lines, 'test.png')
