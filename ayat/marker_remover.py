@@ -3,7 +3,8 @@ import sys
 
 import cv2
 from PIL import Image
-from ayat import find_ayat
+
+from ayat.ayat import find_ayat
 
 DEBUG = False
 MARKER_EMPTY_TOP = 4

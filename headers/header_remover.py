@@ -3,7 +3,8 @@ import sys
 
 import cv2
 from PIL import Image
-from ayat import find_ayat
+
+from ayat.ayat import find_ayat
 
 HEIGHT = 142
 WIDTH = 392

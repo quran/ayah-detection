@@ -2,9 +2,8 @@ import sys
 import cv2
 from PIL import Image
 
-from find_ayat_v2 import find_ayat
-from lines import find_lines
-
+from ayat.find_ayat_v2 import find_ayat
+from lines.lines import find_lines
 
 hafs_ayat = [7, 286, 200, 176, 120, 165, 206, 75, 129, 109, 123, 111,
              43, 52, 99, 128, 111, 110, 98, 135, 112, 78, 118, 64, 77,
@@ -23,8 +22,8 @@ warsh_ayat = [7, 285, 200, 175, 122, 167, 206, 76, 130, 109, 121, 111,
               22, 17, 19, 26, 32, 20, 15, 21, 11, 8, 8, 20, 5, 8, 9, 11,
               10, 8, 3, 9, 5, 5, 6, 3, 6, 3, 5, 4, 5, 6]
 
-sura = 2
-ayah = 6
+sura = 1
+ayah = 1
 # number of lines to skip when the end of the sura is reached
 # for example, one for the basmallah and one for the header.
 # 1 is automatically deducted from this number for sura Tawbah.

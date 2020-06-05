@@ -1,5 +1,6 @@
-from PIL import Image, ImageDraw
 import sys
+
+from PIL import Image
 
 # this script adds a white background to an image
 if len(sys.argv) != 3:

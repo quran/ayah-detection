@@ -2,7 +2,7 @@ import sys
 import cv2
 import numpy as np
 
-from find_ayat_v2 import find_ayat
+from ayat.find_ayat_v2 import find_ayat
 
 
 def remove_markers(rgb_filename, gray_filename):
