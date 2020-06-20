@@ -113,7 +113,7 @@ in order to be compatible with Quran Android, just generate a database file with
 
 ```sql
     CREATE TABLE glyphs(
-      glyph_id int not null,
+      glyph_id int primary key,
       page_number int not null,
       line_number int not null,
       sura_number int not null,
@@ -122,8 +122,7 @@ in order to be compatible with Quran Android, just generate a database file with
       min_x int not null,
       max_x int not null,
       min_y int not null,
-      max_y int not null,
-      primary key(glyph_id)
+      max_y int not null
     );
     CREATE INDEX sura_ayah_idx on glyphs(sura_number, ayah_number);
     CREATE INDEX page_idx on glyphs(page_number);
@@ -146,12 +145,9 @@ note: currently, `glyph_id` is set to `NULL` in the script, which is problematic
 
 #### find_ayat_v2.py
 
-`find_ayat_v2.py` is a simpler version of `ayat.py` that uses OpenCV to find contours instead. consequently, this script doesn't need a template image. the downside of this approach, however, is that it can have many false positives since certain letters can still be detected as contours. this can greatly be reduced if the ayah markers have colors, which most do - simply checking for colors in a certain range greatly reduces (if not completely eliminates) these false positives. this will become the recommended approach moving forward in sha' Allah.
+`find_ayat_v2.py` is a simpler version of `ayat.py` that uses OpenCV to find contours instead. consequently, this script doesn't need a template image. the downside of this approach, however, is that it can have many false positives since certain letters can still be detected as contours. this can greatly be reduced if the ayah markers have colors, which most do - simply checking for colors in a certain range greatly reduces (if not completely eliminates) these false positives. this is the recommended approach moving forward in sha' Allah. the old `ayat.py` will stay around since, in some cases, `ayat.py` works better than `find_ayat_v2.py` (also, `ayat.py` powers the `header_remover.py` script). whenever possible, use `find_ayat_v2.py`, but if it doesn't work well for the particular type of image, use `ayat.py`.
 
 
 #### marker_remover_v2.py
 
-`marker_remover_v2.py` is an updated version of `marker_remover.py` that uses
-`find_ayat_v2.py` to find and remove markers from pages. initial tests are
-very promising al7amdulillah, and this will likely become the recommended
-approach moving forward in sha' Allah.
+`marker_remover_v2.py` is an updated version of `marker_remover.py` that uses `find_ayat_v2.py` to find and remove markers from pages. initial tests are very promising al7amdulillah. whenever v2 works, this is the recommended approach. fallback to v1 only when v2 doesn't work.

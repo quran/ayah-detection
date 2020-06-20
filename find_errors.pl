@@ -26,19 +26,20 @@ $sura = 1;
 $current_target = $counts[0];
 
 while (<>) {
-   $_ =~ /found: (\d+) ayat on page (\d+)/;
-   if ($ayat + int($1) >= $current_target) {
-      $ayat = $ayat + int($1);
-      while ($ayat > $current_target && $sura < 115) {
-        $ayat = $ayat - $current_target;
-        $current_target = $counts[$sura++];
-        $page = int($2) + ($ayat == 0 ? 1 : 0);
-        if ($sura < 115) {
-          print "sura $sura starts on page $page\n";
-        }
+   if ($_ =~ /found: (\d+) ayat on page (\d+)/) {
+      if ($ayat + int($1) >= $current_target) {
+         $ayat = $ayat + int($1);
+         while ($ayat > $current_target && $sura < 115) {
+            $ayat = $ayat - $current_target;
+            $current_target = $counts[$sura++];
+            $page = int($2) + ($ayat == 0 ? 1 : 0);
+            if ($sura < 115) {
+               print "sura $sura starts on page $page\n";
+            }
+         }
+      } else {
+         $ayat = $ayat + int($1);
+         print "page $2 ends with $ayat\n";
       }
-   } else {
-      $ayat = $ayat + int($1);
-      print "page $2 ends with $ayat\n";
    }
 }

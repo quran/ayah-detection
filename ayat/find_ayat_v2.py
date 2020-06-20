@@ -20,7 +20,11 @@ def find_ayat(img_rgb):
         if WIDTH_MIN < w < WIDTH_MAX and HEIGHT_MIN < h < HEIGHT_MAX:
             is_marker = False
             for row in range(y, y + h):
-                for col in range(x, x + h):
+                if is_marker:
+                    break
+                for col in range(x, x + int(h / 2)):
+                    if row >= img_rgb.shape[0] or col >= img_rgb.shape[1]:
+                        continue
                     (b, g, r) = img_rgb[row, col]
                     if b > 200 and g > 150 and g < 200 and r < 50:
                         is_marker = True

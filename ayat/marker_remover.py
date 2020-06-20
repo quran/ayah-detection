@@ -4,7 +4,7 @@ import sys
 import cv2
 from PIL import Image
 
-from ayat.ayat import find_ayat
+from ayat import find_ayat
 
 DEBUG = False
 MARKER_EMPTY_TOP = 4
@@ -86,6 +86,9 @@ def main():
     img_gray = cv2.cvtColor(img_rgb, cv2.COLOR_BGR2GRAY)
     template = cv2.imread(template_filename, 0)
     ayat = find_ayat(img_gray, template)
+    if len(ayat) == 0:
+        print("no matches for %s" % rgb_image_filename)
+        return
 
     bw_template = Image.open(bw_template_path).convert('RGBA')
     template_marker_lengths = marker_lengths(bw_template)
