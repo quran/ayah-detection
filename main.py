@@ -122,7 +122,7 @@ def main():
                     if sura_ayat[sura - 1] == ayah:
                         end_of_sura = True
 
-                    if end_of_sura or abs(minx - cur_line[0][0]) < ayah_item[2]:
+                    if end_of_sura or abs(minx - cur_line[0][0]) < (ayah_item[2] / 2):
                         x_pos_in_line = -1
                         current_line = current_line + 1
                         if current_line == num_lines:
