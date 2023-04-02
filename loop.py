@@ -9,7 +9,7 @@ from lines.lines import find_lines
 def verify_lines(image_dir, filename):
     image = Image.open(image_dir + filename).convert('RGBA')
     lines = find_lines(image, 110, 35, 0)
-    if len(lines) is not 15:
+    if len(lines) != 15:
         print('failure: found %d lines on %s' % (len(lines), filename))
 
 

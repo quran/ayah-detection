@@ -4,3 +4,6 @@ output
 virtualenv
 .idea
 .envrc
+out
+orig
+transparent
